@@ -27,33 +27,4 @@ pipeline{
 				
 										  }
 		 }	
-		} pipeline{
-	agent any
-	
-	stages{
-	   stage('Fetch repository') {
-            steps {
-                git branch: 'test-1.1', credentialsId: '575f0444-ba30-4cfe-919c-fff9b2d7338d', url: 'https://github.com/meghag9/RollbackProject.git' 
-				}
-				  
-				  }
-		stage ('Build'){
-			steps{
-				echo 'mvn clean package' }
-				}
-				
-		stage ('Deploy to tomcat server') {
-			steps{
-				deploy adapters: [tomcat8(credentialsId: '7f6ba635-6c3e-4e72-a23b-ee86b5a49946', path: '', url: 'http://localhost:8081/')], contextPath: 'MyFirstwebApplication.war', war: '**/*.war'
-		   }
-				
-		post{
-			always{ 
-			echo "Archiving the Artifacts"
-			archiveArtifacts artifacts: '**/*.war'
-				  }
-			}
-				
-										  }
-		 }	
 		} 
